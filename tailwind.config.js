@@ -4,7 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        button: "#0095f6",
+        loginbtn: "#0095f6",
+        loginbtnhover: "#9360F7",
+        facebook:"#385185",
       },
       backgroundImage: {
         "logo-pattern":
