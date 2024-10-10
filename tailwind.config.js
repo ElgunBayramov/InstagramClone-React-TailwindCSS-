@@ -6,7 +6,8 @@ export default {
       colors: {
         loginbtn: "#0095f6",
         loginbtnhover: "#9360F7",
-        facebook:"#385185",
+        facebook: "#385185",
+        link: "#164878",
       },
       backgroundImage: {
         "logo-pattern":
