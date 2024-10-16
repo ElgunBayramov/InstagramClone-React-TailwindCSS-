@@ -117,8 +117,8 @@ function Login() {
     </div>
     <p className='flex items-center justify-center text-sm mt-1'>Get the app.</p>
     <div className='flex justify-center gap-x-2 mt-1'>
-      <img className="h-[40px]" src={googlePlay} alt="" />
-      <img className="h-[40px]" src={microsoft} alt="" />
+      <img className="h-[40px] hover:cursor-pointer" src={googlePlay} alt="" />
+      <img className="h-[40px] hover:cursor-pointer" src={microsoft} alt="" />
     </div>
     </div>
   </div>

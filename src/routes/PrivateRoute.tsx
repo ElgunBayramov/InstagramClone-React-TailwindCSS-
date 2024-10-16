@@ -1,18 +1,19 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../redux/store';
 
 function PrivateRoute({ children }:any) {
-    const user = false; 
+    const currentUser = useAppSelector((state)=>state.auth); 
     const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!user) {
+        if (!currentUser) {
             navigate('/auth/login', { replace: true, state: { return_url: location.pathname } });
         }
-    }, [user, navigate, location]);
+    }, [currentUser, navigate, location]);
 
-    return user ? children : null;
+    return currentUser ? children : null;
 }
 
 export default PrivateRoute;

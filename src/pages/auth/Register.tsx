@@ -3,6 +3,12 @@ import { AiFillFacebook } from 'react-icons/ai'
 import googlePlay from '../../assets/images/GooglePlay.png';
 import microsoft from '../../assets/images/Microsoft.png';
 import { useNavigate } from 'react-router-dom';
+import { UserType } from '../../assets/types/sliceTypes';
+import { addUser } from '../../redux/actions/authAction';
+import { useAppDispatch } from '../../redux/store';
+import { useFormik } from 'formik';
+import { registerFormSchemas } from '../../schemas/RegisterFormSchemas';
+import classNames from 'classnames';
 
 function Register() {
     const navigate = useNavigate()
@@ -11,12 +17,48 @@ function Register() {
     const [email,setEmail] = useState<string>("")
     const [password,setPassword] = useState<string>("")
     const [showPassword,setShowPassword] = useState<boolean>(false)
-  
+   
+
+    const submit = async (values: any, actions: any) => {
+      const { resetForm } = actions;
+      const dispatch = useAppDispatch();
+      const navigate = useNavigate();
+    
+      try {
+        const payload: UserType = {
+          id: String(Math.floor(Math.random() * 999999999)),
+          email: values.email,
+          password: values.password,
+          fullname: values.fullname,
+          username:values.username
+        };
+    
+        await dispatch(addUser(payload));
+    
+        resetForm();
+        // toast.success("Qeydiyyat uğurla tamamlandı");
+        navigate("/auth/login");
+      } catch (error) {
+        // If any unexpected error occurs
+        // toast.error("Qeydiyyatdan keçərkən xəta baş verdi");
+      }
+    };
   
     const enable = username && password && fullname && email;
     const toggleVisibility = () => {
       setShowPassword(!showPassword);
     }
+
+    const { values, errors, touched, handleChange, handleBlur, handleSubmit,resetForm } = useFormik({
+      initialValues: {
+        email: '',
+        password: '',
+        fullname: '',
+        username: '',
+      },
+      validationSchema: registerFormSchemas,
+      onSubmit: submit,
+    });
 
   return (
     <div className="w-full h-full flex flex-wrap items-center gap-x-8 justify-center md:mt-4">
@@ -41,11 +83,41 @@ function Register() {
           <span className='px-4 text-[13px] text-gray-500 font-semibold'>OR</span>
           <div className='h-px bg-gray-300 flex-1'/>
         </div>
-      <form className='grid gap-y-1'>
-        <label className='block relative'>
-          <input type='text' required={true} value={email} onChange={(e:React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)} className='bg-zinc-50 px-2 border rounded-sm outline-none text-xs focus:border-gray-400 w-full h-[38px] valid:pt-[10px] peer'/>
-          <small className='absolute top-1/2 left-[9px] cursor-text pointer-event-none text-xs text-gray-500 -translate-y-1/2 transition-all peer-valid:text-[10px] peer-valid:top-2.5 peer-valid:text-gray-600'>Mobile Number or Email</small>
-        </label>
+      <form onSubmit={handleSubmit} className='grid gap-y-1'>
+      <label className='block relative'>
+  <input
+    id="email"
+    type='text'
+    required={true}
+    value={values.email}
+    onChange={handleChange}
+    onBlur={handleBlur}
+    className={classNames(
+      'bg-zinc-50 px-2 border rounded-sm outline-none text-xs focus:border-gray-400 w-full h-[38px] valid:pt-[10px] peer',
+      {
+        'border-red-500': errors.email && touched.email, 
+        'peer-valid:text-[10px] peer-valid:top-2.5 peer-valid:text-gray-600': values.email.length > 0,
+      }
+    )}
+  />
+  <small className={classNames(
+    'absolute left-2 cursor-text pointer-events-none text-xs text-gray-500 transition-all top-1/2 transform -translate-y-1/2',
+    {
+      'top-2.5 text-[10px] text-gray-600': values.email.length > 0,
+      'top-[20px]': values.email.length === 0 
+    }
+  )}>
+    Mobile number or email
+  </small>
+  
+  {/* Display error message */}
+  {errors.email && touched.email && (
+    <div className="text-red-500 text-xs mt-1">
+      {errors.email}
+    </div>
+  )}
+</label>
+
         <label className='relative flex border rounded-sm focus-within:border-gray-400'>
           <input type={showPassword ? 'text' : "password"} required={true} value={password} onChange={(e:React.ChangeEvent<HTMLInputElement>)=>setPassword(e.target.value)} className='bg-zinc-50 px-2 outline-none text-xs w-full h-[38px] valid:pt-[10px] peer'/>
           <small className='absolute top-1/2 left-[9px] cursor-text pointer-event-none text-xs text-gray-500 -translate-y-1/2 transition-all peer-valid:text-[10px] peer-valid:top-2.5 peer-valid:text-gray-600'>Password</small>
