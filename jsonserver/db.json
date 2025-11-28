@@ -4,13 +4,19 @@
             "id": 1,
             "name": "Alice",
             "email": "test@gmail.com",
-            "password": "Test@123"
+            "password": "alice123"
         },
         {
             "id": 2,
-            "name": "Bob",
+            "name": "Angela",
             "email": "test2@gmail.com",
-            "password": "Test@1234"
+            "password": "angela123"
+        },
+        {
+            "id": 3,
+            "name": "Alma",
+            "email": "test3@gmail.com",
+            "password": "alma123"
         }
     ]
 }
