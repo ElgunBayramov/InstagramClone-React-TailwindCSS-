@@ -14,13 +14,12 @@ function Register() {
     const navigate = useNavigate()
     const [username,setUsername] = useState<string>("")
     const [fullname,setFullname] = useState<string>("")
-    const [email,setEmail] = useState<string>("")
+    const [email] = useState<string>("")
     const [password,setPassword] = useState<string>("")
     const [showPassword,setShowPassword] = useState<boolean>(false)
    
 
-    const submit = async (values: any, actions: any) => {
-      const { resetForm } = actions;
+    const submit = async (values: any) => {
       const dispatch = useAppDispatch();
       const navigate = useNavigate();
     
