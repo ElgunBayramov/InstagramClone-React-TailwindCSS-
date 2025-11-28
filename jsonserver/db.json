@@ -3,7 +3,20 @@
         {
             "id": 1,
             "name": "Alice",
-            "email": "test@gmail.com"
+            "email": "test@gmail.com",
+            "password": "alice123"
+        },
+        {
+            "id": 2,
+            "name": "Angela",
+            "email": "test2@gmail.com",
+            "password": "angela123"
+        },
+        {
+            "id": 3,
+            "name": "Alma",
+            "email": "test3@gmail.com",
+            "password": "alma123"
         }
     ]
 }
